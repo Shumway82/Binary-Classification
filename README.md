@@ -49,12 +49,6 @@ $ docker-compose up
 $ http://localhost:5000/predict?image_url=https://raw.githubusercontent.com/Shumway82/Binary-Classification/master/Data/test/1522142328_bad.jpeg
 ```
 
-## Pre-requiremtents
-* tensorflow >= 1.8 
-* pil 
-* numpy 
-* opencv
-
 ## Installation tf_base package
 1. Clone the repository
 ```
