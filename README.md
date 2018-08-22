@@ -36,7 +36,7 @@ To find the best model I would study and use "Neural Architecture Search" method
 The factory usually has very high speeds in the production pipeline. The processing must be very fast which makes it necessary to process both the preprocessing and the classification above 50-100Hz. Other problems are different light situations or motion bluring if you have high processing frequencys.
 
 ## Preprocessing
-1. Central cropping of to image size 960x960
+1. Central cropping of input-image to image size 960x960
 2. Find nail by treshold segmentation. 
    2.1 Final treshold T = max(image) - treshold(25)
    2.2 False if image(x,y) < T else True 
