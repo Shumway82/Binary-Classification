@@ -1,0 +1,32 @@
+{
+    "__description__": "Trainer_Params",
+    "batch_size": 16,
+    "beta1": 0.9,
+    "checkpoint_dir": "checkpoints",
+    "checkpoint_restore_dir": "",
+    "decay": 0.99,
+    "epoch": 10000,
+    "evals_per_iteration": 25,
+    "experiment_name": "Models_Deevio_Nailgun2",
+    "gpu": true,
+    "gpus": [
+        0
+    ],
+    "image_size": 112.0,
+    "input_norm": "tanh",
+    "is_train": true,
+    "learning_rate_G": 0.0001,
+    "load_checkpoint": false,
+    "make_summery_full": false,
+    "make_summery_graph": false,
+    "new": true,
+    "normalization_G": "IN",
+    "pretrained_generator_dir": "../pretrained_models/",
+    "root_dir": "../",
+    "save_checkpoint": false,
+    "step_decay": 100,
+    "use_pretrained_generator": true,
+    "use_tensorboard": true,
+    "use_validation_set": true,
+    "verbose": false
+}

@@ -9,7 +9,6 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-
 class FlaskApp(Flask):
 
     def __init__(self, *args, **kwargs):
@@ -21,7 +20,7 @@ class FlaskApp(Flask):
         gflags.DEFINE_string("model_dir", "Models_Deevio_Nailgun", "Model directory")
 
         flags(sys.argv)
-        model_params = Inferencer_Params(image_size=224 / 2,
+        model_params = Inferencer_Params(image_size=112,
                                             model_path=flags.model_dir)
 
         self.model_inferencer = Inferencer(model_params)
@@ -51,4 +50,4 @@ def predict():
     return return_string
 
 if __name__ == "__main__":
-  app.run(host="localhost", debug=True)
+  app.run(host="0.0.0.0", debug=True)

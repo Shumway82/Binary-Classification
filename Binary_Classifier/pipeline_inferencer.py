@@ -47,7 +47,6 @@ class Pipeline_Inferencer(IPipeline_Inferencer):
 # flags = tf.app.flags
 flags = gflags.FLAGS
 gflags.DEFINE_string("dataset", "../Data/", "Dataset path")
-gflags.DEFINE_string("outdir", "../../../Data/Results/Horse2Zebra_AtoB", "Output path")
 gflags.DEFINE_string("model_dir", "Models_Deevio_Nailgun", "Model directory")
 
 def main():

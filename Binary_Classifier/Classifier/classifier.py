@@ -125,9 +125,8 @@ class Classifier_Model(IModel):
 
             net = tf.layers.flatten(net)
 
-            shape = net.get_shape()[1]
             net = linear_layer(net,
-                               4096/8,
+                               512,
                                activation=self.activation,
                                use_weight_decay=True,
                                is_training=self.is_training,
@@ -135,7 +134,7 @@ class Classifier_Model(IModel):
             net = dropout(net, 0.5, train=self.is_training)
 
             net = linear_layer(net,
-                               4096/8,
+                               512,
                                activation=self.activation,
                                use_weight_decay=True,
                                is_training=self.is_training,

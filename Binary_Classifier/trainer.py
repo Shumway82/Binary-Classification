@@ -40,7 +40,7 @@ class Trainer_Params(ITrainer_Params):
         self.use_pretrained_generator = True
         self.pretrained_generator_dir = model_path
 
-        self.experiment_name = "Models_Deevio_Nailgun"
+        self.experiment_name = "Models_Deevio_Nailgun2"
         self.checkpoint_restore_dir = ''
         self.load_checkpoint = False
 

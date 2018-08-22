@@ -9,6 +9,12 @@ setup(name='Binary_Classifier',
       license='MIT',
       packages=['Binary_Classifier'],
       install_requires=[
-          'markdown',
+						'flask',
+						'numpy',
+						'opencv-python',
+						'pillow',
+						'python-gflags',
+						'requests',
+						'markdown',
       ],
       zip_safe=False)
