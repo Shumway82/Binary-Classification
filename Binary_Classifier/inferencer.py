@@ -19,7 +19,7 @@ class Inferencer_Params(IInferencer_Params):
         self.normalization_G = 'IN'
 
         self.use_pretrained_generator = True
-        self.pretrained_generator_dir = self.root_dir + model_path
+        self.pretrained_generator_dir = model_path
 
         if params_path is not '':
             if load:

@@ -15,13 +15,11 @@ class FlaskApp(Flask):
         super(FlaskApp, self).__init__(*args, **kwargs)
 
         flags = gflags.FLAGS
-        gflags.DEFINE_string("dataset", "../Data/", "Dataset path")
-        gflags.DEFINE_string("outdir", "../../../Data/Results/Horse2Zebra_AtoB", "Output path")
-        gflags.DEFINE_string("model_dir", "Models_Deevio_Nailgun", "Model directory")
+        gflags.DEFINE_string("model_dir", "/app/Models_Deevio_Nailgun", "Model directory")
 
         flags(sys.argv)
         model_params = Inferencer_Params(image_size=112,
-                                            model_path=flags.model_dir)
+                                         model_path=flags.model_dir)
 
         self.model_inferencer = Inferencer(model_params)
 
