@@ -1,34 +1,70 @@
-## CycleGAN
+## Binary Classifier
 
-"Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks"
+# Deevio Data Scientist Hiring Challenge
 
-Paper: https://arxiv.org/pdf/1703.10593.pdf
+## Introduction
+Modern manufacturing processes have a high degree of automation and at the same time high
+quality requirements. Machine vision helps ensuring these quality requirements are met by
+providing means for automatic recognition of defects. However, traditional approaches for
+machine vision require experts to implement the necessary algorithms, take time to set up, and
+need fine tuned lighting installations.
+Deevio sets out to simplify the machine vision process drastically to bring automated quality
+control to broad application areas within a short time-to-market.
+We have successfully applied our machine vision technology to multiple use cases from different
+domains. Currently, we are building a prototype consisting of a camera and a computing device
+which can be deployed in a factory setting at a pilot customer. The goal of Deevio is to provide
+technology that covers different use cases including classification, defect localization and
+counting. In the future, more data sources from the manufacturing process can be tapped to
+correlate visible occurrence with other production parameters. Thus, Deevio will be able to give
+detailed real-time insights into the production process.
 
-Abstract:
+## The Challenge
+The challenge is an opportunity to demonstrate proficiency with problem solving and
+collaboration skills we would expect you to use as Data Scientist at Deevio. It consists of two
+tasks and is meant as the foundation for further onsite collaboration during your interview.
+Additionally, we want you to get a feel for some of the problems and tasks you'll encounter at
+Deevio.
 
-Image-to-image translation is a class of vision and graphics problems where the goal is to learn the mapping between an input image and an output image using a training set of aligned image pairs. However, for many tasks, paired training data will not be available. We present an approach for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples. Our goal is to learn a mapping G:X→Y such that the distribution of images from G(X) is indistinguishable from the distribution Y using an adversarial loss. Because this mapping is highly under-constrained, we couple it with an inverse mapping F:Y→X and introduce a cycle consistency loss to push F(G(X))≈X (and vice versa). Qualitative results are presented on several tasks where paired training data does not exist, including collection style transfer, object transfiguration, season transfer, photo enhancement, etc. Quantitative comparisons against several prior methods demonstrate the superiority of our approach.
+## Questions to keep in mind
+#### How well does your model perform? How does it compare to the simplest baseline model you can think of?
+####  How many images are required to build an accurate model?
+####  Where do you see the main challenge in building a model like the one we asked here?
+####  What would you do if you had more time to improve the model?
+####  What problems might occur if this solution would be deployed to a factory that requires automatic nails quality assurance?
 
-## Modifications
-* Modify the ResNet-Generator with recursive residual blocks like in the DRRN. http://cvlab.cse.msu.edu/pdfs/Tai_Yang_Liu_CVPR2017.pdf
-* Option to use an U-Net with skip connections.
-* An an perceptual loss witch is extracted and calculated from the discriminator network of the corresponding domain A or B. 
-
-## Results
-* Comming soon
+## Run Docker-Image
+1. Clone the repository
+```
+$ git clone https://github.com/Shumway82/Binary-Classification.git
+```
+2. Go to folder
+```
+$ cd Binary-Classification
+```
+3. Build and run Docker
+```
+$ docker-compose build
+$ docker-compose up
+```
+4. Run
+```
+$ http://localhost:5000/predict?image_url=https://raw.githubusercontent.com/Shumway82/Binary-Classification/master/Data/test/1522142328_bad.jpeg
+```
 
 ## Pre-requiremtents
 * tensorflow >= 1.8 
 * pil 
 * numpy 
+* opencv
 
 ## Installation tf_base package
 1. Clone the repository
 ```
-$ git clone git@github.com:Shumway82/tf_core.git
+$ git clone https://github.com/Shumway82/tf_base.git
 ```
 2. Go to folder
 ```
-$ cd tf_core
+$ cd tf_base
 ```
 3. Install with pip3
 ```
@@ -37,15 +73,15 @@ or for editing the repository
 $ pip3 install -e .
 ```
 
-## Install CycleGAN package
+## Install Binary-Classification package
 
 1. Clone the repository
 ```
-$ git@github.com:Shumway82/CycleGAN.git
+$ git clone https://github.com/Shumway82/Binary-Classification.git
 ```
 2. Go to folder
 ```
-$ cd CycleGAN
+$ cd Binary-Classification
 ```
 3. Install with pip3
 ```
@@ -56,10 +92,10 @@ $ pip3 install -e .
 
 1. Training
 ```
-$ python pipeline_trainer.py --dataset "../horse2zebra/" --config_path "../config/" 
+$ python pipeline_trainer.py --dataset "../Data/"
 ```
 
 2. Inferencing
 ```
-$ python pipeline_inferencer.py --dataset "../horse2zebra/testA" --outdir ../Results/Horse2Zebra_AtoB" --model_dir ../pretrained_models/generator/Horse2Zebra/"
+$ python pipeline_inferencer.py --dataset "../Data/" --model_dir "Models_Deevio_Nailgun" 
 ```
