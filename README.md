@@ -1,5 +1,3 @@
-## Binary Classifier
-
 # Deevio Data Scientist Hiring Challenge
 
 ## Introduction
@@ -67,9 +65,7 @@ $ git clone https://github.com/Shumway82/tf_base.git
 $ cd tf_base
 ```
 3. Install with pip3
-```
-$ pip3 install tfcore
-or for editing the repository 
+``` 
 $ pip3 install -e .
 ```
 
