@@ -56,11 +56,11 @@ class Inferencer(IInferencing):
 
         self.is_training = tf.placeholder(tf.bool, shape=[], name='is_training')
 
+        # Load Model
         classifier_params = Classifier_Params(activation='relu',
                                               normalization=self.params.normalization_G)
 
         self.classifier = Classifier_Model(self.sess, classifier_params, self.global_step, self.is_training)
-        self.pretrained_generator_dir = self.params.pretrained_generator_dir
 
         if self.build_model_inference():
             print(' [*] Build model pass...')

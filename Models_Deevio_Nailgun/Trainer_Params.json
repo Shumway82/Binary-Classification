@@ -5,9 +5,9 @@
     "checkpoint_dir": "checkpoints",
     "checkpoint_restore_dir": "",
     "decay": 0.99,
-    "epoch": 10000,
+    "epoch": 2000,
     "evals_per_iteration": 25,
-    "experiment_name": "Models_Deevio_Nailgun",
+    "experiment_name": "Models_Deevio_Nailgun2",
     "gpu": true,
     "gpus": [
         0

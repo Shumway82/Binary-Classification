@@ -21,12 +21,13 @@ class Trainer_Params(ITrainer_Params):
         # Arguments
             image_size: Image size (int)
             params_path: Parameter-Path for loading and saving (str)
+            model_path: Model path for pretrained model
             load: Load parameter (boolean)
         """
         super().__init__()
 
         self.image_size = image_size
-        self.epoch = 10000
+        self.epoch = 2000
         self.batch_size = 16
         self.decay = 0.99
         self.step_decay = 100
@@ -94,6 +95,7 @@ class Classifier_Trainer(ITrainer):
 
         self.is_training = tf.placeholder(tf.bool, shape=[], name='is_training')
 
+        #   Load Model
         classifier_params = Classifier_Params(activation='relu',
                                               normalization=self.params.normalization_G)
 
@@ -175,11 +177,11 @@ class Classifier_Trainer(ITrainer):
         if batch_valid_X.ndim < 4:
             batch_valid_X = np.expand_dims(batch_valid_X, axis=-1)
 
-        self.image_X = normalize(batch_valid_X, normalization_type=self.params.input_norm)
-        self.image_Y = np.eye(2)[np.array([batch_valid_Y]).reshape(-1)]
+        self.image_val = normalize(batch_valid_X, normalization_type=self.params.input_norm)
+        self.label_val = np.eye(2)[np.array([batch_valid_Y]).reshape(-1)]
 
-        print(' [*] Image_X ' + str(self.image_X.shape))
-        print(' [*] Image_Y ' + str(self.image_Y.shape))
+        print(' [*] Image_X ' + str(self.image_val.shape))
+        print(' [*] Label_Y ' + str(self.label_val.shape))
 
     def validate(self, epoch, iteration, idx):
         """ Validate the validation-set
@@ -194,8 +196,8 @@ class Classifier_Trainer(ITrainer):
         g_loss_val, g_summery, g_summery_vis = self.sess.run([self.classifier.total_loss,
                                                               self.summary_val,
                                                               self.summary_vis],
-                                                             feed_dict={self.all_X: self.image_X,
-                                                                        self.all_Y: self.image_Y,
+                                                             feed_dict={self.all_X: self.image_val,
+                                                                        self.all_Y: self.label_val,
                                                                         self.epoch: epoch,
                                                                         self.classifier.learning_rate: self.params.learning_rate_G,
                                                                         self.is_training: False})
@@ -207,8 +209,8 @@ class Classifier_Trainer(ITrainer):
             g_loss_val, g_summery = self.sess.run([
                 self.classifier.total_loss,
                 self.summary_vis_one],
-                feed_dict={self.all_X: self.image_X,
-                           self.all_Y: self.image_Y,
+                feed_dict={self.all_X: self.image_val,
+                           self.all_Y: self.label_val,
                            self.epoch: epoch,
                            self.is_training: False})
 
@@ -230,7 +232,6 @@ class Classifier_Trainer(ITrainer):
     def set_losses(self, Y):
 
         self.g_loss = self.classifier.loss(Y)
-
 
     def build_model(self, tower_id):
         """ Build models for U-Net
@@ -256,7 +257,6 @@ class Classifier_Trainer(ITrainer):
         model_list = []
         model_list.append(self.classifier)
 
-
         t_vars = tf.trainable_variables()
         self.g_vars = [var for var in t_vars]
 
@@ -264,7 +264,7 @@ class Classifier_Trainer(ITrainer):
         with tf.control_dependencies(update_ops):
             self.g_optim = tf.train.AdamOptimizer(self.classifier.learning_rate, beta1=self.params.beta1).minimize(self.classifier.total_loss, var_list=self.g_vars)
 
-        return []#model_list
+        return []  # model_list
 
     def train_online(self, batch_X, batch_Y, epoch=0, counter=1, idx=0, batch_total=0):
         """ Training, validating and saving of the generator model
@@ -284,22 +284,22 @@ class Classifier_Trainer(ITrainer):
 
         start_time = time.time()
 
+        #   Cyclic learning rate
         self.params.learning_rate_G = self.classifier.crl.get_learning_rate(counter)
 
-        #   Normalize input images between -1 and 1
+        #   Normalize input images between -1 and 1 + data augumentaion
         pre_processing = Preprocessing()
         pre_processing.add_function_x(Preprocessing.Rotate(steps=1).function)
         pre_processing.add_function_x(Preprocessing.Flip().function)
         for i in range(self.params.batch_size):
             batch_X[i], _ = pre_processing.run(batch_X[i], None)
 
-
         batch_X = np.asarray(batch_X)
         if batch_X.ndim < 4:
             batch_X = np.expand_dims(batch_X, axis=-1)
 
-        self.input_X = normalize(batch_X, normalization_type=self.params.input_norm)
-        self.input_Y = np.eye(2)[np.array([batch_Y]).reshape(-1)]
+        self.images_train = normalize(batch_X, normalization_type=self.params.input_norm)
+        self.label_train = np.eye(2)[np.array([batch_Y]).reshape(-1)]
 
         #   Validate after N iterations
         if epoch < 2:
@@ -311,8 +311,8 @@ class Classifier_Trainer(ITrainer):
 
         # Optimize Classifier
 
-        feed_dict = {self.all_X: self.input_X,
-                     self.all_Y: self.input_Y,
+        feed_dict = {self.all_X: self.images_train,
+                     self.all_Y: self.label_train,
                      self.epoch: epoch,
                      self.classifier.learning_rate: self.params.learning_rate_G,
                      self.is_training: True}
@@ -326,5 +326,5 @@ class Classifier_Trainer(ITrainer):
               % (epoch, idx, batch_total, time.time() - start_time, g_loss))
 
         #   Save model and checkpoint
-        if np.mod(counter + 1, 50) == 0:  # int(batch_total / 2)
+        if np.mod(counter + 1, 50) == 0:
             self.classifier.save(self.sess, self.checkpoint_dir, self.global_step)

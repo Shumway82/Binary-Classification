@@ -36,6 +36,7 @@ class Classifier_Model(IModel):
             sess: Tensorflow-Session
             params: Instance of ExampleModel_Params
             global_steps: Globel steps for optimizer
+            is_training: placeholder variable for switch between training end eval phase
         """
         super().__init__(sess, params, global_steps)
         self.model_name = self.params.name
@@ -73,7 +74,7 @@ class Classifier_Model(IModel):
             Tensor of dimension 4D
         """
 
-        def down_block(net, scope, conv_count, f_out, k_size=3, activation=tf.nn.relu, normalization=None, is_training=False):
+        def conv_block(net, scope, conv_count, f_out, k_size=3, activation=tf.nn.relu, normalization=None, is_training=False):
             with tf.variable_scope(scope):
                 for i in range(conv_count):
                     net = conv2d(net,
@@ -112,9 +113,9 @@ class Classifier_Model(IModel):
 
             layer = [1,1,1]
             f_out = [16, 32,64]
-            k_size = [5,5,3,3]
+            k_size = [5,5,3]
             for n in range(len(layer)):
-                net = down_block(net,
+                net = conv_block(net,
                                  scope='stage' + str(n + 1),
                                  conv_count=layer[n],
                                  f_out=f_out[n],
@@ -154,12 +155,17 @@ class Classifier_Model(IModel):
 
         loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=Y, logits=self.logits))
 
-        regularizer_L2 = tf.add_n(tf.get_collection('losses'))
-        self.total_loss = tf.reduce_mean(loss + 0.001 * regularizer_L2)
+        # Weight decay regularizer
+        regularizer_L2 = 0.001 * tf.add_n(tf.get_collection('losses'))
 
+        # total loss by the mean of cross entropy loss and the weighted regularizer
+        self.total_loss = tf.reduce_mean(loss + regularizer_L2)
+
+        # Accuracy for train and test set
         correct_prediction = tf.equal(tf.argmax(Y, 1), tf.argmax(self.probs, 1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
+        # Summarys for tensorboard
         self.summary.append(tf.summary.scalar("accuracy_train", accuracy))
         self.summary_val.append(tf.summary.scalar("accuracy_test", accuracy))
 

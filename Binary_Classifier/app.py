@@ -38,6 +38,9 @@ def predict():
     img = Image.open(BytesIO(response.content))
     img = np.asarray(img)
 
+    if img.ndim != 2:
+        return "Image needs to be uint8"
+
     img_x, _ = app.pre_processing.run(img, None)
 
     probs = app.model_inferencer.inference(img_x)
