@@ -33,7 +33,7 @@ Tuning hyperparameter. To overcome the overfitting problem it is importend to us
 ####  What would you do if you had more time to improve the model?
 To find the best model I would study and use "Neural Architecture Search" methods like AutoML (Google). An other methode is using GANs to create synthetic samples if more data are needed. GANs can also used as unsupervised classifier. Transfer-Learning can be used by using the first layers of existing models to overcome the problem with limited data.
 ####  What problems might occur if this solution would be deployed to a factory that requires automatic nails quality assurance?
-The factory usually has very high speeds in the production pipeline. The processing must be very fast which makes it necessary to process both the preprocessing and the classification above 50-100Hz. Other problems are different light situations or motion bluring if you have high processing frequencys.
+The factory usually has very high speeds in the production pipeline. The processing must be very fast which makes it necessary to process both the preprocessing and the classification above 50-100Hz. Other problems are different light situations or motion bluring if you have high processing- and to low capturing frequencys.
 
 ## Preprocessing
 1. Central cropping of input-image to image size 960x960
