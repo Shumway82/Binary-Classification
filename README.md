@@ -25,20 +25,20 @@ Deevio.
 
 ## Questions to keep in mind
 #### How well does your model perform? How does it compare to the simplest baseline model you can think of?
-My model have on the training-set nealy 100% accuracy and on the test-set an accurays of 75%. The model dends to overfitting. To prevent this I use dropouts and weight decay. To avoid overfitting I choose an really simple model with very less parameter and an small input image size. Experiments with more parameter and bigger images increase the overfitting problem. The reason for overfitting is to less training-data.
+My model have on the training-set nealy 100% accuracy and on the test-set an accurays of 77%. The model tends to overfitting. To prevent this I use dropouts and weight decay. To avoid overfitting I choose an really simple model with very less parameter and an small input image size. Experiments with more parameter and bigger images increase the overfitting problem. The reason for overfitting in this case is to less training-data.
 ####  How many images are required to build an accurate model?
 To create an accurate model more than 5k images are needed. To overcome this issue I use data augmentation. The most meaningful technique in this case is flipping(horizontal and vertical) and rotation with a step-angle of 1 and reflection. Transformations are not usefull.  
 ####  Where do you see the main challenge in building a model like the one we asked here?
 Tuning hyperparameter. To overcome the overfitting problem it is importend to use the right parameter count in the model architecture,  and to find the right regularization factors. An cyclic learning-rate is usefull to overcome local minima (high learning rate) and to find the best optimum (low learning rate). 
 ####  What would you do if you had more time to improve the model?
-To find the best model I would study and use "Neural Architecture Search" methods like AutoML (Google). An other methode is using GANs to create synthetic samples if more data are needed. GANs can also used as unsupervised classifier. Transfer-Learning can be used by using the first layers of existing models to overcome the problem with limited data.
+To find the best model I would study and use "Neural Architecture Search" methods like AutoML (Google). An other methode is using GAN's to create synthetic samples if more data are needed. GAN's can also used as unsupervised classifier. In this case one generator for creating synthetic data and two discriminator, one discriminator for classification and one discriminator for training the generator. Transfer-Learning can be used by using the first layers of existing models to overcome the problem with limited data.
 ####  What problems might occur if this solution would be deployed to a factory that requires automatic nails quality assurance?
 The factory usually has very high speeds in the production pipeline. The processing must be very fast which makes it necessary to process both the preprocessing and the classification above 50-100Hz. Other problems are different light situations or motion bluring if you have high processing- and to low capturing frequencys.
 
 ## Preprocessing
 1. Central cropping of input-image to image size 960x960
-2. Find nail by treshold segmentation. 
-   2.1 Final treshold T = max(image) - treshold(25)
+2. Find nail by treshold segmentation. \
+   2.1 Final treshold T = max(image) - 32 \
    2.2 False if image(x,y) < T else True 
 3. Find central mass point center_x and center_y of True-Area
 4. Central cropping at center_x and center_y with size 448x448
@@ -54,7 +54,7 @@ The factory usually has very high speeds in the production pipeline. The process
 ## Model-Architecture
 1. conv5x5, filter=16, stride=1, padding=VALID, instance norm, relu
 2. max_pool2x2 
-3. dropout=0.2
+3. dropout=0.5
 4. conv5x5, filter=16, stride=1, padding=VALID, instance norm, relu
 5. max_pool2x2 
 6. dropout=0.5
@@ -71,7 +71,7 @@ The factory usually has very high speeds in the production pipeline. The process
 17. softmax
 
 ## Hyper-Parameter
-Batch-size 16, instance norm for conv-layer, cyclic learning-rate 1e-4 - 1e-5, adam-optimizer with beta1 0.9, epochs 2000
+Batch-size 16, instance norm for conv-layer, cyclic learning-rate 1e-4 - 1e-5, adam-optimizer with beta1 0.9, epochs 2000, training set = 160 images (50% good, 50% bad), test set = 38 images (50% good, 50% bad)
 
 #### Accuracy of Test-Set and Training-Set
 ![bad](https://github.com/Shumway82/Binary-Classification/blob/master/Data/images/accuracy.png)
