@@ -1,4 +1,4 @@
-# Deevio Data Scientist Hiring Challenge
+# Data Scientist - Challenge
 
 ## Introduction
 Modern manufacturing processes have a high degree of automation and at the same time high
