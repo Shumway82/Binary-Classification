@@ -6,22 +6,22 @@ quality requirements. Machine vision helps ensuring these quality requirements a
 providing means for automatic recognition of defects. However, traditional approaches for
 machine vision require experts to implement the necessary algorithms, take time to set up, and
 need fine tuned lighting installations.
-Deevio sets out to simplify the machine vision process drastically to bring automated quality
+The Company sets out to simplify the machine vision process drastically to bring automated quality
 control to broad application areas within a short time-to-market.
 We have successfully applied our machine vision technology to multiple use cases from different
 domains. Currently, we are building a prototype consisting of a camera and a computing device
-which can be deployed in a factory setting at a pilot customer. The goal of Deevio is to provide
+which can be deployed in a factory setting at a pilot customer. The goal of the company is to provide
 technology that covers different use cases including classification, defect localization and
 counting. In the future, more data sources from the manufacturing process can be tapped to
-correlate visible occurrence with other production parameters. Thus, Deevio will be able to give
+correlate visible occurrence with other production parameters. Thus, the company will be able to give
 detailed real-time insights into the production process.
 
 ## The Challenge
 The challenge is an opportunity to demonstrate proficiency with problem solving and
-collaboration skills we would expect you to use as Data Scientist at Deevio. It consists of two
+collaboration skills we would expect you to use as Data Scientist at the Company. It consists of two
 tasks and is meant as the foundation for further onsite collaboration during your interview.
 Additionally, we want you to get a feel for some of the problems and tasks you'll encounter at
-Deevio.
+the company.
 
 ## Questions to keep in mind
 #### How well does your model perform? How does it compare to the simplest baseline model you can think of?
