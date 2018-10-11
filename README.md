@@ -133,5 +133,5 @@ $ python pipeline_trainer.py --dataset "../Data/"
 
 2. Inferencing
 ```
-$ python pipeline_inferencer.py --dataset "../Data/" --model_dir "Models_Deevio_Nailgun" 
+$ python pipeline_inferencer.py --dataset "../Data/" --model_dir "Nails" 
 ```
