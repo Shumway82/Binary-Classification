@@ -3,7 +3,6 @@ from tfcore.interfaces.IModel import IModel, IModel_Params
 from tfcore.core.layer import *
 from tfcore.core.activations import *
 from tfcore.core.loss import *
-from tfcore.utilities.utils import pad_borders, get_patches
 
 
 class Classifier_Params(IModel_Params):

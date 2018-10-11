@@ -15,7 +15,7 @@ class FlaskApp(Flask):
         super(FlaskApp, self).__init__(*args, **kwargs)
 
         flags = gflags.FLAGS
-        gflags.DEFINE_string("model_dir", "/app/Models_Deevio_Nailgun", "Model directory")
+        gflags.DEFINE_string("model_dir", "/app/Nails", "Model directory")
 
         flags(sys.argv)
         model_params = Inferencer_Params(image_size=112,

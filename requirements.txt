@@ -8,4 +8,4 @@ python-gflags
 requests
 tensorflow
 
-# -e git://github.com/Shumway82/tf_base.git#egg=tf_base
+# -e git://github.com/veegee82/tf_base.git#egg=tf_base
